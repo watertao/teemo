@@ -1,0 +1,13 @@
+{
+  "resources": [
+    "GET /test-b"
+  ],
+  "events": [
+    {
+      "name": "create-resource",
+      "resources": [
+        "POST /test-b"
+      ]
+    }
+  ]
+}

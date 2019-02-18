@@ -1,0 +1,1 @@
+export default {"test-a":{"resources":["GET /test-a"],"events":[{"name":"create-resource","resources":["POST /test-a"]}]},"test-b":{"resources":["GET /test-b"],"events":[{"name":"create-resource","resources":["POST /test-b"]}]}}
