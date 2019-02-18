@@ -115,6 +115,7 @@ export default {
     environment: process.env.target ? path.resolve(__dirname, `../src/environment.${process.env.target}.js`) :
       path.resolve(__dirname, '../src/environment.dev.js'),
     projectConfig: path.resolve(__dirname, '../src/defaultSettings.js'),
+    logo: path.resolve(__dirname, '../src/assets', defaultSettings.logoImg),
   },
   chainWebpack: webpackPlugin,
 };

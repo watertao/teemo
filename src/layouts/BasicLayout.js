@@ -10,7 +10,6 @@ import pathToRegexp from 'path-to-regexp';
 import Media from 'react-media';
 import { formatMessage } from 'umi/locale';
 import Authorized from '@/utils/Authorized';
-import logo from '@/assets/EDA-LOGO.svg';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
@@ -18,6 +17,7 @@ import Exception403 from '../pages/Exception/403';
 import PageLoading from '@/components/PageLoading';
 import SiderMenu from '@/components/SiderMenu';
 import { menu, title } from '../defaultSettings';
+import logo from 'logo';
 
 import styles from './BasicLayout.less';
 
