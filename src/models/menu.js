@@ -1,7 +1,6 @@
 import memoizeOne from 'memoize-one';
 import isEqual from 'lodash/isEqual';
 import { formatMessage } from 'umi/locale';
-import Authorized from '@/utils/Authorized';
 import { menu } from '../defaultSettings';
 import MODULE_SETTINGS from '@tmp/moduleSettings';
 import _ from 'lodash';
@@ -224,8 +223,6 @@ function check(item, currentUser, resourceMetadata) {
     return item;
   }
   const itemResourceIds = item.resources.map(resource => resource.id);
-  console.log(item)
-  console.log(itemResourceIds)
   // check if current user's resource_ids has all ids in itemResourceIds.
   if ( _.difference(itemResourceIds, currentUser.resource_ids).length === 0){
     return item;
@@ -257,10 +254,7 @@ export default {
 
       try {
         // 根据当前会话的用户权限，过滤不可访问的菜单
-
-        console.log(resourceMetadata)
         const menuData = filterMenuData(fullMenuData, currentUser, resourceMetadata);
-        console.log(menuData);
         const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(fullMenuData);
         yield put({
           type: 'save',

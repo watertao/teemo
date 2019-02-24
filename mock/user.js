@@ -6,7 +6,7 @@ export default {
       res.status(200).send({
         token: '1234567890abcdef',
         name: '吴涛',
-        resource_ids: [1, 2, 3, 4],
+        resource_ids: [1, 2, ],
         // resource_ids: [],
       });
     } else {

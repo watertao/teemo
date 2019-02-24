@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
 import Media from 'react-media';
 import { formatMessage } from 'umi/locale';
-import Authorized from '@/utils/Authorized';
+import { hasAuthority4Path } from '@/utils/authority';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
@@ -95,28 +95,50 @@ class BasicLayout extends React.Component {
     return breadcrumbNameMap[pathKey];
   };
 
-  getRouteAuthority = (pathname, routeData) => {
-    const routes = routeData.slice(); // clone
-
-    const getAuthority = (routeDatas, path) => {
-      let authorities;
-      routeDatas.forEach(route => {
-        // check partial route
-        if (pathToRegexp(`${route.path}(.*)`).test(path)) {
-          if (route.authority) {
-            authorities = route.authority;
-          }
-          // is exact route?
-          if (!pathToRegexp(route.path).test(path) && route.routes) {
-            authorities = getAuthority(route.routes, path);
-          }
-        }
-      });
-      return authorities;
-    };
-
-    return getAuthority(routes, pathname);
-  };
+  // getRoute = (pathname, routeData) => {
+  //   const routes = routeData.slice();
+  //
+  //   const _getRoute = (routeDatas, path) => {
+  //     let route;
+  //     routeDatas.forEach(route => {
+  //       // check partial route
+  //       if (pathToRegexp(`${route.path}(.*)`).test(path)) {
+  //         if (route.authority) {
+  //           authorities = route.authority;
+  //         }
+  //         // is exact route?
+  //         if (!pathToRegexp(route.path).test(path) && route.routes) {
+  //           authorities = getAuthority(route.routes, path);
+  //         }
+  //       }
+  //     });
+  //     return authorities;
+  //   }
+  //
+  // }
+  //
+  // getRouteAuthority = (pathname, routeData) => {
+  //   const routes = routeData.slice(); // clone
+  //
+  //   const getAuthority = (routeDatas, path) => {
+  //     let authorities;
+  //     routeDatas.forEach(route => {
+  //       // check partial route
+  //       if (pathToRegexp(`${route.path}(.*)`).test(path)) {
+  //         if (route.authority) {
+  //           authorities = route.authority;
+  //         }
+  //         // is exact route?
+  //         if (!pathToRegexp(route.path).test(path) && route.routes) {
+  //           authorities = getAuthority(route.routes, path);
+  //         }
+  //       }
+  //     });
+  //     return authorities;
+  //   };
+  //
+  //   return getAuthority(routes, pathname);
+  // };
 
   getPageTitle = (pathname, breadcrumbNameMap) => {
     const currRouterData = this.matchParamsPath(pathname, breadcrumbNameMap);
@@ -176,7 +198,7 @@ class BasicLayout extends React.Component {
     } = this.props;
 
     const isTop = PropsLayout === 'topmenu';
-    const routerConfig = this.getRouteAuthority(pathname, routes);
+    // const routerConfig = this.getRouteAuthority(pathname, routes);
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
       <Layout>
@@ -204,9 +226,9 @@ class BasicLayout extends React.Component {
             {...this.props}
           />
           <Content className={styles.content} style={contentStyle}>
-            <Authorized authority={routerConfig} noMatch={<Exception403 />}>
-              {children}
-            </Authorized>
+            {
+              hasAuthority4Path(pathname) ? <Exception403 /> : children
+            }
           </Content>
           <Footer />
         </Layout>

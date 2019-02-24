@@ -45,9 +45,7 @@ const plugins = [
         : {}),
     },
   ],
-  ['./plugins/module-plugin.js', {
-
-  }],
+  ['./plugins/module-plugin', { exclude: ['.umi'] }],
 ];
 
 export default {

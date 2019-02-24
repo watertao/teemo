@@ -1,3 +1,4 @@
 /dist
 /node_modules
 /src/pages/.umi
+/config/router.config.js
