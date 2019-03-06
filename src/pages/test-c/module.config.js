@@ -1,14 +1,14 @@
 module.exports = {
 
   name: {
-    'zh-CN': '测试B',
-    'en-US': 'test-B',
+    'zh-CN': '测试C',
+    'en-US': 'test-C',
   },
 
   authority: {
     resources: [
-      'GET /test/b',
-      'GET /test/b/{bId}'
+      'GET /test/c',
+      'GET /test/c/{cId}'
     ],
     events: {
       code: 'create',
@@ -17,5 +17,7 @@ module.exports = {
       ]
     }
   },
+
+  routes: []
 
 }

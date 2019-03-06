@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Form, Input, Icon, Button, Radio, Popover, Alert} from 'antd';
 import {connect} from 'dva';
 import styles from './login.css';
-import logo from '@/assets/EDA-LOGO.svg';
+import logo from 'logo';
 import _ from 'lodash';
 
 

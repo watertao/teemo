@@ -15,7 +15,7 @@ module.exports = {
   },
 
   title: 'XX 管理平台',      // 浏览器 TAB 标签的 title
-  logoImg: 'EDA-LOGO.svg',   // LOGO 图片，相对于 src/assets 的路径, 注意该值修改后需要重启 npm start
+  logoImg: 'HTSEC-LOGO.svg',   // LOGO 图片，相对于 src/assets 的路径, 注意该值修改后需要重启 npm start
 
   pwa: true,
   request: {

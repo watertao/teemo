@@ -2,8 +2,10 @@ import memoizeOne from 'memoize-one';
 import isEqual from 'lodash/isEqual';
 import { formatMessage } from 'umi/locale';
 import { menu } from '../defaultSettings';
+import MENU_CONFIG from '../menu.config.js';
 import MODULE_SETTINGS from '@tmp/moduleSettings';
 import _ from 'lodash';
+import { getResourceByVerbUriPattern } from '@/utils/authority';
 
 
 // Conversion router to menu.
@@ -77,63 +79,51 @@ import _ from 'lodash';
 //   }
 // ]
 //
-function formatter(data, parentName, resourceMetadata) {
+function formatter(data, parentNames) {
   return data
     .map(item => {
-
-      if (!(item.isMenuData)) {
-        return null;
-      }
-
-      // 确定节点类型 (module / group / event)
-      let nodeType = null;
-      if (item.routes) {
-        // 如果节点包含 routes 子节点，则认为是一个菜单组
-        nodeType = 'group';
-      } else if (MODULE_SETTINGS[item.name]) {
-        // 如果能够在模块配置中找到对应的配置，则认为是一个菜单模块
-        nodeType = 'module';
-      }
-
-      // 设置节点 code，节点 code 为级联累加
-      let code = null;
-      if (parentName) {
-        code = `${parentName}.${item.name}`;
-      } else {
-        code = item.name
-      }
-
-      const locale = `menu.${code}`;
-      // if enableMenuLocale use item.name,
-      // close menu international
-      const name = menu.disableLocal
-        ? item.name
-        : formatMessage({ id: locale, defaultMessage: locale });
-
+      const nParentNames = _.cloneDeep(parentNames || []);
       const result = {
-        name,
-        code,
-        nodeType,
-        locale,
-        path: item.path,
+        code: item.code,
+        nodeType: item.type,
       };
-      if (nodeType == 'group') {
-        const children = formatter(item.routes, code, resourceMetadata);
+      if (item.type == 'group') {
+        const locale = `menu.${nParentNames.length > 0 ? _.join(nParentNames, '.') + '.' : ''}${item.code}`;
+        // if enableMenuLocale use item.name,
+        // close menu international
+        const name = menu.disableLocal
+          ? item.code
+          : formatMessage({ id: locale, defaultMessage: locale });
+        result.path = `${nParentNames.length > 0 ? '/' + _.join(nParentNames, '/') : ''}/${item.code}`;
+        nParentNames.push(item.code);
+        const children = formatter(item.children, nParentNames);
         // Reduce memory usage
         result.children = children;
-        delete result.routes;
+        result.name = name;
+        result.locale = locale;
+        result.icon = item.icon;
         return result;
-      } else if (nodeType == 'module') {
-        const moduleSetting = MODULE_SETTINGS[item.name];
-        result.resources = moduleSetting.resources.map(verbUriPattern => {
-          const resource = getResourceByVerbUriPattern(resourceMetadata, verbUriPattern);
+      } else if (item.type == 'module') {
+        const moduleSetting = MODULE_SETTINGS[item.code];
+        const locale = `module.${item.code}`;
+        // if enableMenuLocale use item.name,
+        // close menu international
+        const name = menu.disableLocal
+          ? item.code
+          : formatMessage({ id: locale, defaultMessage: locale });
+        result.resources = moduleSetting.authority.resources ? moduleSetting.authority.resources.map(verbUriPattern => {
+          const resource = getResourceByVerbUriPattern(verbUriPattern);
           if (resource) {
             return resource;
           } else {
-            console.warn(`resource[${resourceVerbUriPattern}] in module[${result.code}] is not defined in metadata(db)`);
+            console.warn(`resource[${verbUriPattern}] in module[${result.code}] is not defined in metadata(db)`);
             return null;
           }
-        }).filter(item => item);
+        }).filter(item => item) : [];
+        result.path = moduleSetting.path;
+        result.name = name;
+        result.locale = locale;
+        result.icon = item.icon;
         return result;
       }
 
@@ -147,10 +137,10 @@ const memoizeOneFormatter = memoizeOne(formatter, isEqual);
 /**
  * get SubMenu or Item
  */
-const getSubMenu = (item, currentUser, resourceMetadata) => {
+const getSubMenu = (item, currentUser) => {
   // doc: add hideChildrenInMenu
   if (item.children) {
-    const subMenus = filterMenuData(item.children, currentUser, resourceMetadata);
+    const subMenus = filterMenuData(item.children, currentUser);
     if (_.isEmpty(subMenus)) {
       return null;
     } else {
@@ -166,12 +156,12 @@ const getSubMenu = (item, currentUser, resourceMetadata) => {
 /**
  * 根据当前登录用户，过滤无权限的菜单
  */
-const filterMenuData = (menuData, currentUser, resourceMetadata) => {
+const filterMenuData = (menuData, currentUser) => {
   if (!menuData) {
     return [];
   }
   return menuData
-    .map(item => check(getSubMenu(item, currentUser, resourceMetadata), currentUser, resourceMetadata))
+    .map(item => check(getSubMenu(item, currentUser), currentUser))
     .filter(item => item);
 };
 /**
@@ -197,25 +187,7 @@ const getBreadcrumbNameMap = menuData => {
 const memoizeOneGetBreadcrumbNameMap = memoizeOne(getBreadcrumbNameMap, isEqual);
 
 
-function getResourceById(resourceMetadata, id) {
-  for (let i = 0; i < resourceMetadata.length; i++) {
-    if (resourceMetadata[i].id == id) {
-      return resourceMetadata[i];
-    }
-  }
-  return null;
-}
-
-function getResourceByVerbUriPattern(resourceMetadata, verbUriPattern) {
-  for (let i = 0; i < resourceMetadata.length; i++) {
-    if (`${resourceMetadata[i].verb} ${resourceMetadata[i].uri_pattern}` == verbUriPattern) {
-      return resourceMetadata[i];
-    }
-  }
-  return null;
-}
-
-function check(item, currentUser, resourceMetadata) {
+function check(item, currentUser) {
   if (item == null) {
     return null;
   }
@@ -241,27 +213,28 @@ export default {
 
   effects: {
     *getMenuData({ payload }, { put, select, call}) {
-      const { routes } = payload;
-      const currentUser = yield select(state => state.global.currentUser);
-      const resourceMetadata = yield select(state => state.global.resourceMetadata);
-
-      // 从路由配置及模块配置转换完整的菜单元数据
-      const fullMenuData = memoizeOneFormatter(routes, null, resourceMetadata);
-      yield put({
-        type: 'save',
-        payload: { fullMenuData },
-      });
-
       try {
+        const currentUser = yield select(state => state.global.currentUser);
+        //const resourceMetadata = yield select(state => state.global.resourceMetadata);
+
+        // 从菜单配置(menu.config.js)及模块配置(moduleSettings.js)转换完整的菜单元数据
+        const fullMenuData = memoizeOneFormatter(MENU_CONFIG, null);
+
+        yield put({
+          type: 'save',
+          payload: { fullMenuData },
+        });
+
+
         // 根据当前会话的用户权限，过滤不可访问的菜单
-        const menuData = filterMenuData(fullMenuData, currentUser, resourceMetadata);
+        const menuData = filterMenuData(fullMenuData, currentUser);
         const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(fullMenuData);
         yield put({
           type: 'save',
           payload: {menuData, breadcrumbNameMap},
         });
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
   },

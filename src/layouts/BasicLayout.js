@@ -13,7 +13,7 @@ import { hasAuthority4Path } from '@/utils/authority';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
-import Exception403 from '../pages/Exception/403';
+import Exception403 from '@/components/Exception/403';
 import PageLoading from '@/components/PageLoading';
 import SiderMenu from '@/components/SiderMenu';
 import { menu, title } from '../defaultSettings';
@@ -61,7 +61,6 @@ class BasicLayout extends React.Component {
   componentDidMount() {
     const {
       dispatch,
-      route: { routes, authority },
     } = this.props;
 
     Promise.all([
@@ -74,7 +73,6 @@ class BasicLayout extends React.Component {
     ]).then(() => {
       dispatch({
         type: 'menu/getMenuData',
-        payload: { routes, authority },
       });
     });
     dispatch({
@@ -227,13 +225,14 @@ class BasicLayout extends React.Component {
           />
           <Content className={styles.content} style={contentStyle}>
             {
-              hasAuthority4Path(pathname) ? <Exception403 /> : children
+              hasAuthority4Path(pathname) ? children : <Exception403 />
             }
           </Content>
           <Footer />
         </Layout>
       </Layout>
     );
+
     return (
       currentUser ? (
       <React.Fragment>

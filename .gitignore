@@ -1,4 +1,15 @@
-/dist
-/node_modules
+# umi temp directory
 /src/pages/.umi
-/config/router.config.js
+
+# build directory
+/dist
+
+# Dependency directories
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

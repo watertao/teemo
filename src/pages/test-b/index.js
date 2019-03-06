@@ -19,7 +19,7 @@ export default class TestA extends Component {
 
     return (
       <PageHeaderWrapper
-        title={<FormattedMessage id="menu.test.test-b" />}
+        title={<FormattedMessage id="module.test-b" />}
       >
         <div>
           to do

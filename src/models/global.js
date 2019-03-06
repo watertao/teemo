@@ -1,6 +1,6 @@
 import { queryNotices } from '@/services/api';
-import { queryCurrent, login } from '@/services/user';
-import { fetchFullResourceMetadata } from '@/services/global';
+import { fetchFullResourceMetadata, queryCurrent, login } from '@/services/global';
+import { storeToken } from '@/utils/rest-token-resolver';
 import router from 'umi/router';
 
 export default {
@@ -42,7 +42,7 @@ export default {
           payload: data
         });
       } catch (ex) {
-        console.log(ex);
+        console.error(ex);
       }
     },
 
@@ -53,8 +53,7 @@ export default {
           type: 'saveCurrentUser',
           payload: data
         });
-        // store token to localstorage
-        sessionStorage.setItem("auth_token", data.token);
+        storeToken(data.token);
         router.push("/");
       } catch (ex) {
         console.error(ex);

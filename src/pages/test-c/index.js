@@ -5,7 +5,7 @@ import { connect } from 'dva';
 
 
 @connect(({ loading }) => ({ loading }))
-export default class ModuleEntry extends Component {
+export default class TestA extends Component {
 
 
   componentDidMount() {
@@ -19,12 +19,11 @@ export default class ModuleEntry extends Component {
 
     return (
       <PageHeaderWrapper
-        title={<FormattedMessage id="module.test-a" />}
+        title={'aaaa'}
       >
         <div>
           to do
         </div>
-        <div>asdf</div>
       </PageHeaderWrapper>
     );
 

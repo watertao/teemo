@@ -33,7 +33,6 @@ export default class BaseMenu extends PureComponent {
       return [];
     }
     return menusData
-      .filter(item => item.name && !item.hideInMenu)
       .map(item => this.getSubMenuOrItem(item, parent))
       .filter(item => item);
   };
@@ -48,8 +47,7 @@ export default class BaseMenu extends PureComponent {
    * get SubMenu or Item
    */
   getSubMenuOrItem = item => {
-    // doc: add hideChildrenInMenu
-    if (item.children && !item.hideChildrenInMenu && item.children.some(child => child.name)) {
+    if (item.children && item.children.some(child => child.name)) {
       const { name } = item;
       return (
         <SubMenu

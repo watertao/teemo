@@ -1,6 +1,18 @@
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 export default {
 
+  'GET /api/testme': (req, res) => {
+
+      res.status(200).send([
+        Math.random(),
+        Math.random(),
+        Math.random(),
+        Math.random(),
+      ]);
+
+
+  },
+
   'GET /api/system/session': (req, res) => {
     if (req.headers['x-auth-token'] == '1234567890abcdef') {
       res.status(200).send({
@@ -113,7 +125,7 @@ export default {
       {
         id: 1,
         verb: 'GET',
-        uri_pattern: '/test-a',
+        uri_pattern: '/test/a',
         name: 'GET测试接口a',
       },
       {
@@ -125,7 +137,7 @@ export default {
       {
         id: 3,
         verb: 'GET',
-        uri_pattern: '/test-b',
+        uri_pattern: '/test/b',
         name: 'GET测试接口b',
       },
       {
