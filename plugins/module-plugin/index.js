@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { existsSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
+import {existsSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync, mkdirSync} from 'fs';
 import _ from 'lodash';
 export default function(api, options = { exclude: [] }) {
   const { paths } = api;
@@ -8,6 +8,10 @@ export default function(api, options = { exclude: [] }) {
   const pagesLocation = join(paths.absSrcPath, 'pages');
   const globalModuleSettingFile = join(paths.absTmpDirPath, 'moduleSettings.js');
   const menuConfigFile = join(paths.absSrcPath, 'menu.config.js');
+
+  if (!existsSync(paths.absTmpDirPath)) {
+    mkdirSync(paths.absTmpDirPath);
+  }
 
   api.addPageWatcher([pagesLocation]);
 

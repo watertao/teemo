@@ -7,7 +7,7 @@ import { get, post } from '../utils/rest-accessor';
  * @returns {Promise<void>}
  */
 export async function fetchFullResourceMetadata() {
-  return get('/metadata/resources?infinite=true', null, null, false);
+  return get('/metadata/resources?infinite=true', null, null);
 }
 
 
@@ -17,7 +17,7 @@ export async function fetchFullResourceMetadata() {
  * @returns {Promise<void>}
  */
 export async function queryCurrent() {
-  return get('/system/session', null, null, false);
+  return get('/system/session', null, null);
 }
 
 /**
