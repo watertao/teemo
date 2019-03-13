@@ -1,5 +1,5 @@
 import { join } from 'path';
-import {existsSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync, mkdirSync} from 'fs';
+import { existsSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync, mkdirSync } from 'fs';
 import _ from 'lodash';
 export default function(api, options = { exclude: [] }) {
   const { paths } = api;
@@ -22,6 +22,11 @@ export default function(api, options = { exclude: [] }) {
 
       // combine module.config.js in modules into globalModuleSetting
       const globalModuleSetting = {};
+      for (let moduleId in require.cache) {
+        if (moduleId.indexOf("module.config.js") >= 0) {
+          delete require.cache[moduleId];
+        }
+      }
       recursiveReadDir(pagesLocation, exclude, (dir, parents) => {
         const moduleConfigFileLocation = join(dir, 'module.config.js');
         if (existsSync(moduleConfigFileLocation)) {
@@ -32,8 +37,12 @@ export default function(api, options = { exclude: [] }) {
         }
       });
 
-
       // generate routes according to menu.config.json and globalModuleSetting
+      for (let moduleId in require.cache) {
+        if (moduleId.indexOf("menu.config.js") >= 0) {
+          delete require.cache[moduleId];
+        }
+      }
       const menuConfig = require(menuConfigFile);
       const menuRouteConfig = recursiveConvertMenu2Route(menuConfig, [], globalModuleSetting);
       // console.log(JSON.stringify(menuRouteConfig,null,2))
