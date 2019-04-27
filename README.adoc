@@ -19,7 +19,7 @@ watertao <1059912278@qq.com>
 image::https://github.com/watertao/static-assets/blob/master/teemo/Xnip2019-04-27_18-33-12.jpg?raw=true[]
 image::https://github.com/watertao/static-assets/blob/master/teemo/Xnip2019-04-27_18-53-23.jpg?raw=true[]
 
-== 快速入门
+== 快速开始
 
 === clone 项目
 
@@ -99,3 +99,103 @@ module.exports = {
 <6> copyright，显示在页面底部
 
 
+== 模块
+
+Teemo 将每个菜单视作一个模块，模块与模块之间相互独立。模块位于 `src/pages` 下， Teemo 将递归查找该目录下的所有子目录，但凡某个目录下包含
+`module.config.js`,那么该目录被视作一个模块。
+
+=== module.config.js
+
+模块的配置文件：
+
+.module.config.js
+[source, javascript]
+----
+module.exports = {
+
+  name: 'moduleName',
+
+  authority: {
+    resources: [
+      'GET /auth/roles',
+      'GET /auth/roles/{roleId}',
+      'GET /auth/roles/{roleId}',
+      'GET /auth/roles/{roleId}',
+    ],
+    events: [
+      {
+        code: 'create-role',
+        name: 'createRoleEventName',
+        resources: [
+          'POST /auth/roles',
+        ],
+      },
+      {
+        code: 'modify-role',
+        name: 'modifyRoleEventName',
+        resources: [
+          'PUT /auth/roles/{roleId}',
+          'GET /auth/roles',
+          'GET /auth/roles/{roleId}',
+          'GET /auth/rols',
+        ],
+      },
+      {
+        code: 'delete-role',
+        name: 'deleteRoleEventName',
+        resources: [
+          'DELETE /auth/roles/{roleId}',
+        ],
+      },
+    ],
+  },
+
+  routes: [
+    {
+      // 转成实际路由时会在前面补上菜单对应的路径前缀
+      path: '/detail',
+      // 路由对应组件,是相对本文件所在目录的相对路径
+      component: 'components/Analysis',
+      routes: [
+        {
+          path: '/detail/more-detail',
+          component: 'components/MoreDetail',
+        }
+      ]
+    }
+]
+
+}
+----
+
+=== 创建模块
+
+Teemo 提供了一个命令行工具用于快速创建
+
+
+
+=== 受保护的页面
+
+Teemo 将页面分为受保护和不受保护两种，在应用启动后首次访问某个受保护页面时，Teemo 会从浏览器获取
+
+
+=== 权限的控制
+
+
+对于前后端分离的应用而言，权限真正控制的点是 REST 接口。所以 Teemo 辨别当前用户是否具有访问某个菜单或者按钮的方式就是辨别他是否具有
+相应的接口访问权限。 +
+
+Teemo 为每个菜单或者按钮都定义了关联的 REST 接口集合，比如菜单【用户管理】被定义为关联了以下接口：
+
+* 获取用户集合（`GET /auth/users`）
+* 添加用户（`POST /auth/users`）
+* 修改用户（`PUT /auth/users/{userId}`）
+* 删除用户（`DELETE /auth/users/{userId}`）
+
+那么当用户同时具备了以上四个接口时，那么 Teemo 就认为他具有访问菜单【用户管理】的权限了。
+
+
+=== 登录
+
+`Teemo` 默认自带了一个登录模块，位于 `src/pages/login`，该模提供了一个表单用于收集用户的标识（用户名）和凭证（密码），点击登录后向后台
+发起登录请求，创建会话。 +
