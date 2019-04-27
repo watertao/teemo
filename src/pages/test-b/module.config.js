@@ -1,21 +1,19 @@
 module.exports = {
 
-  name: {
-    'zh-CN': '测试B',
-    'en-US': 'test-B',
-  },
+  name: 'testa',
 
   authority: {
     resources: [
       'GET /test/b',
       'GET /test/b/{bId}'
     ],
-    events: {
-      code: 'create',
-      resources: [
-
-      ]
-    }
+    events: [
+      {
+        code: 'create',
+        name: 'create test',
+        resources: []
+      },
+    ],
   },
 
 }

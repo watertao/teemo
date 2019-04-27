@@ -1,0 +1,20 @@
+export default {
+
+    namespace: '${modelName}',
+
+
+    state: {
+
+    },
+
+
+    effects: {
+
+    },
+
+
+    reducers: {
+
+    }
+
+}

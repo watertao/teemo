@@ -1,6 +1,7 @@
 import fetch from 'dva/fetch';
 import router from 'umi/router';
 import pconf from 'projectConfig';
+import { getLocale } from 'umi/locale';
 
 
 const NOCACHE_HEADERS = {
@@ -69,9 +70,10 @@ export default function request(url, option) {
       if (simpleResponse.status >= 200 && simpleResponse.status < 300) {
         return simpleResponse;
       } else {
-        const error = new Error(simpleResponse.statusText);
+        const error = new Error(simpleResponse.data.error);
         error.extra = {
           ...simpleResponse,
+          statusText: simpleResponse.data.error,
           options: newOptions
         };
         error.request = {
@@ -106,6 +108,12 @@ function _appendDefaultOptions(option) {
   // append no cache headers
   newOptions.headers = {
     ...NOCACHE_HEADERS,
+    ...newOptions.headers,
+  };
+
+  // append accept-language header
+  newOptions.headers = {
+    'Accept-Language': getLocale(),
     ...newOptions.headers,
   };
 

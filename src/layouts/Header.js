@@ -70,7 +70,7 @@ class HeaderView extends Component {
     }
     if (key === 'logout') {
       dispatch({
-        type: 'login/logout',
+        type: 'global/logout',
       });
     }
   };

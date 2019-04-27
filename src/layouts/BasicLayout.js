@@ -51,7 +51,7 @@ const query = {
   },
 };
 
-class BasicLayout extends React.Component {
+class BasicLayout extends React.PureComponent {
   constructor(props) {
     super(props);
     this.getPageTitle = memoizeOne(this.getPageTitle);
@@ -63,18 +63,23 @@ class BasicLayout extends React.Component {
       dispatch,
     } = this.props;
 
-    Promise.all([
-      dispatch({
-        type: 'global/fetchResourceMetadata',
-      }),
-      dispatch({
-        type: 'global/fetchCurrent',
-      })
-    ]).then(() => {
-      dispatch({
-        type: 'menu/getMenuData',
-      });
+    dispatch({
+      type: 'global/fetchCurrent',
+    }).then(result => {
+      if (result) {
+        dispatch({
+          type: 'global/fetchResourceMetadata',
+        }).then(() => {
+          dispatch({
+            type: 'menu/getFullMenuData'
+          });
+          dispatch({
+            type: 'menu/getMenuData',
+          });
+        });
+      }
     });
+
     dispatch({
       type: 'setting/getSetting',
     });
@@ -93,56 +98,11 @@ class BasicLayout extends React.Component {
     return breadcrumbNameMap[pathKey];
   };
 
-  // getRoute = (pathname, routeData) => {
-  //   const routes = routeData.slice();
-  //
-  //   const _getRoute = (routeDatas, path) => {
-  //     let route;
-  //     routeDatas.forEach(route => {
-  //       // check partial route
-  //       if (pathToRegexp(`${route.path}(.*)`).test(path)) {
-  //         if (route.authority) {
-  //           authorities = route.authority;
-  //         }
-  //         // is exact route?
-  //         if (!pathToRegexp(route.path).test(path) && route.routes) {
-  //           authorities = getAuthority(route.routes, path);
-  //         }
-  //       }
-  //     });
-  //     return authorities;
-  //   }
-  //
-  // }
-  //
-  // getRouteAuthority = (pathname, routeData) => {
-  //   const routes = routeData.slice(); // clone
-  //
-  //   const getAuthority = (routeDatas, path) => {
-  //     let authorities;
-  //     routeDatas.forEach(route => {
-  //       // check partial route
-  //       if (pathToRegexp(`${route.path}(.*)`).test(path)) {
-  //         if (route.authority) {
-  //           authorities = route.authority;
-  //         }
-  //         // is exact route?
-  //         if (!pathToRegexp(route.path).test(path) && route.routes) {
-  //           authorities = getAuthority(route.routes, path);
-  //         }
-  //       }
-  //     });
-  //     return authorities;
-  //   };
-  //
-  //   return getAuthority(routes, pathname);
-  // };
-
   getPageTitle = (pathname, breadcrumbNameMap) => {
     const currRouterData = this.matchParamsPath(pathname, breadcrumbNameMap);
 
     if (!currRouterData) {
-      return title;
+      return formatMessage({ id: title});
     }
     const pageName = menu.disableLocal
       ? currRouterData.name
@@ -151,7 +111,7 @@ class BasicLayout extends React.Component {
           defaultMessage: currRouterData.name,
         });
 
-    return `${pageName} - ${title}`;
+    return `${pageName} - ${formatMessage({ id: title})}`;
   };
 
   getLayoutStyle = () => {
@@ -193,8 +153,8 @@ class BasicLayout extends React.Component {
       route: { routes },
       fixedHeader,
       currentUser,
+      isSessionSynced,
     } = this.props;
-
     const isTop = PropsLayout === 'topmenu';
     // const routerConfig = this.getRouteAuthority(pathname, routes);
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
@@ -234,7 +194,7 @@ class BasicLayout extends React.Component {
     );
 
     return (
-      currentUser ? (
+      isSessionSynced ? (
       <React.Fragment>
         <DocumentTitle title={this.getPageTitle(pathname, breadcrumbNameMap)}>
           <ContainerQuery query={query}>
@@ -256,6 +216,7 @@ class BasicLayout extends React.Component {
 export default connect(({ global, setting, menu: menuModel }) => ({
   collapsed: global.collapsed,
   currentUser: global.currentUser,
+  isSessionSynced: global.isSessionSynced,
   layout: setting.layout,
   menuData: menuModel.menuData,
   breadcrumbNameMap: menuModel.breadcrumbNameMap,

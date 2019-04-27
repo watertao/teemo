@@ -1,3 +1,5 @@
+// restart server after change
+
 module.exports = [
   // 测试
   {
@@ -9,21 +11,24 @@ module.exports = [
       { code: 'test-b', type: 'module', },
       // 测试C
       { code: 'test-c', type: 'module', },
+
+
     ]
   },
 
-  // 范例
+
+  // authority management
   {
-    code: 'demo', type: 'group', icon: 'profile',
+    code: 'authority', type: 'group', icon: 'safety',
     children: [
-      {
-        // 数据展示类
-        code: 'data-display', type: 'group',
-        children: [
-          // 基本列表展示
-          { code: 'demo_basic-data-list', type: 'module' }
-        ]
-      }
+      // resource management
+      { code: 'authority_resource-mgnt', type: 'module' },
+      // role management
+      { code: 'authority_role-mgnt', type: 'module' },
+      // user management
+      { code: 'authority_user-mgnt', type: 'module' },
     ]
-  }
+  },
+
+
 ];

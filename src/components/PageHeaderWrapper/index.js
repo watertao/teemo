@@ -11,22 +11,24 @@ const PageHeaderWrapper = ({ children, contentWidth, wrapperClassName, top, ...r
   <div style={{ margin: '-24px -24px 0' }} className={wrapperClassName}>
     {top}
     <MenuContext.Consumer>
-      {value => (
-        <PageHeader
-          wide={contentWidth === 'Fixed'}
-          home={<FormattedMessage id="menu.home" defaultMessage="Home" />}
-          {...value}
-          key="pageheader"
-          {...restProps}
-          linkElement={Link}
-          itemRender={item => {
-            if (item.locale) {
-              return <FormattedMessage id={item.locale} defaultMessage={item.title} />;
-            }
-            return item.title;
-          }}
-        />
-      )}
+      {value => {
+        return (
+          <PageHeader
+            wide={contentWidth === 'Fixed'}
+            home={<FormattedMessage id="menu.home" defaultMessage="Home" />}
+            {...value}
+            key="pageheader"
+            {...restProps}
+            linkElement={Link}
+            itemRender={item => {
+              if (item.locale) {
+                return <FormattedMessage id={item.locale} defaultMessage={item.title} />;
+              }
+              return item.title;
+            }}
+          />
+        )
+      }}
     </MenuContext.Consumer>
     {children ? (
       <div className={styles.content}>

@@ -1,0 +1,6 @@
+import { get, post } from '@/utils/rest-accessor';
+
+
+export function test(filterParam) {
+  return get('/a/b', null, filterParam);
+}

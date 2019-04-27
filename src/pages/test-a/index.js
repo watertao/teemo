@@ -7,6 +7,11 @@ import { connect } from 'dva';
 @connect(({ loading }) => ({ loading }))
 export default class ModuleEntry extends Component {
 
+  constructor(props) {
+    super(props);
+    console.log('Constructor of test-a')
+  }
+
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -22,9 +27,8 @@ export default class ModuleEntry extends Component {
         title={<FormattedMessage id="module.test-a" />}
       >
         <div>
-          to do
+          hello world
         </div>
-        <div>asdf</div>
       </PageHeaderWrapper>
     );
 

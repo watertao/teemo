@@ -1,0 +1,26 @@
+import React, { Component } from 'react';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { formatMessage as fm, FormattedMessage } from 'umi/locale';
+import mm from '@/utils/message-util';
+import { connect } from 'dva';
+import styles from './style.less';
+
+
+@connect(({ loading }) => ({ loading }))
+export default class Index extends Component {
+
+  componentDidMount() {
+
+  }
+
+  render = () => {
+
+    return (
+      <PageHeaderWrapper title={mm('moduleName')}>
+        <div>to do</div>
+      </PageHeaderWrapper>
+    );
+
+  }
+
+}

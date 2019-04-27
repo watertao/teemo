@@ -5,6 +5,7 @@ import BaseMenu from '../SiderMenu/BaseMenu';
 import { getFlatMenuKeys } from '../SiderMenu/SiderMenuUtils';
 import styles from './index.less';
 import pconf from 'projectConfig';
+import { formatMessage } from 'umi/locale';
 
 export default class TopNavHeader extends PureComponent {
   state = {
@@ -33,7 +34,7 @@ export default class TopNavHeader extends PureComponent {
             <div className={styles.logo} key="logo" id="logo">
 
                 <img src={logo} alt="logo" />
-                <h1>{ pconf.title }</h1>
+                <h1>{formatMessage({id: pconf.title})}</h1>
 
             </div>
             <div

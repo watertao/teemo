@@ -5,9 +5,25 @@ import settingDrawer from './zh-CN/settingDrawer';
 import settings from './zh-CN/settings';
 import pwa from './zh-CN/pwa';
 import component from './zh-CN/component';
-import MODULE_LOCALE from '@tmp/moduleNameLocale_zh-CN';
+import MODULE_LOCALE from '@tmp/moduleLocale_zh-CN';
 
 export default {
+  'app.title': 'API协议管理平台',
+
+  'login.title': '登录',
+  'login.literal.loginTo': '登录到',
+  'login.userName': '用户名',
+  'login.password': '密码',
+  'login.forgotPassword': '忘记密码?',
+  'login.forgotPassword.tip': '请联系管理员',
+  'login.loginButton': '登 录',
+  'login.form.userName.empty': '用户名不可为空',
+  'login.form.password.empty': '密码不可为空',
+
+  'label.action': '操作',
+  'label.delete': '删除',
+  'label.viewOrModify': '查看/编辑',
+
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
   'layout.user.link.privacy': '隐私',

@@ -1,0 +1,61 @@
+.form-drawer {
+  :global {
+    .ant-drawer-wrapper-body {
+      height: calc(100% - 53px) !important;
+      .ant-drawer-body {
+        height: calc(100% - 55px) !important;
+      }
+    }
+    .ant-form-item {
+      margin-bottom: 0px;
+      padding-bottom: 12px;
+      .ant-form-item-label {
+        line-height: 17px;
+        text-align: left;
+        display: block;
+        width: 100%;
+        float: none;
+        &>label {
+          font-size: 12px;
+          color: rgba(0,0,0,0.85);
+        }
+        &>label.ant-form-item-required:before {
+          content: none;
+          margin-right: 0;
+        }
+        &>label.ant-form-item-required:after {
+          content: '*';
+          font-size: 12px;
+          color: red;
+        }
+        &>label:after {
+          content: none;
+        }
+      }
+      .ant-form-item-control-wrapper {
+        float: none;
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  .footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px;
+    background: #fff;
+    z-index: 2;
+
+    .button {
+      margin-right: 16px;
+    }
+
+  }
+
+
+
+}

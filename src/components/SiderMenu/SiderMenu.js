@@ -6,6 +6,8 @@ import styles from './index.less';
 import PageLoading from '../PageLoading';
 import { getDefaultCollapsedSubMenus } from './SiderMenuUtils';
 import pconf from 'projectConfig';
+import { formatMessage } from 'umi/locale';
+
 
 const BaseMenu = React.lazy(() => import('./BaseMenu'));
 const { Sider } = Layout;
@@ -80,7 +82,7 @@ export default class SiderMenu extends PureComponent {
         <div className={styles.logo} id="logo">
           <Link to="/">
             <img src={logo} alt="logo" />
-            <h1>{ pconf.title }</h1>
+            <h1>{ formatMessage({id: 'app.title'}) }</h1>
           </Link>
         </div>
         <Suspense fallback={<PageLoading />}>

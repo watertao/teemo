@@ -25,14 +25,23 @@ export default function(e) {
 
   if (extra.status == 401) {
     process_401(e, path);
+  } else {
+    const { extra, request } = e;
+    const { options: { method } } = request;
+    notifyError(
+      extra.statusText,
+      extra.status,
+      request.url,
+      extra.data? extra.data.message : extra.statusText,
+      method,
+    );
   }
 
 }
 
 function process_401(e, path) {
   const { extra, request } = e;
-  const { url, options: { method } } = request;
-  const { endpoint } = env;
+  const { options: { method } } = request;
 
   // GET /system/session
   // no notify , but redirect to /login
@@ -48,7 +57,7 @@ function process_401(e, path) {
       extra.status,
       request.url,
       extra.data? extra.data.message : extra.statusText,
-      request.options.method
+      method,
     );
   }
 

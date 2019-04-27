@@ -1,29 +1,23 @@
 module.exports = {
 
-  name: {
-    'zh-CN': '测试A',
-    'en-US': 'test-A',
-  },
+  name: 'testa',
 
   authority: {
     resources: [
       'GET /test/a',
       'GET /test/a/{aId}'
     ],
-    events: {
-      code: 'update',
-      resources: [
-
-      ]
-    }
+    events: [
+      {
+        code: 'update',
+        name: 'update',
+        resources: []
+      },
+    ],
   },
 
   routes: [
-    {
-      path: '/detail',
-      component: 'components/Analysis',
-      authority: 'create',
-    }
+
   ]
 
 }

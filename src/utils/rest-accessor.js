@@ -5,7 +5,8 @@ import { appendTokenToRequest } from './rest-token-resolver';
 
 
 const JSON_CONTENT_HEADER = {
-  'Content-Type': 'application/json; charset=utf-8'
+  'Content-Type': 'application/json; charset=utf-8',
+  'Accept': 'application/json',
 };
 
 
@@ -69,7 +70,7 @@ export async function del(uri, pathVariables, filterParams) {
   let options = { method: 'DELETE' };
   options = appendTokenToRequest(options);
   try {
-    return await request(resolveQualifiedURL(uri, pathVariables, filterParams), options).catch(processError);
+    return await request(resolveQualifiedURL(uri, pathVariables, filterParams), options);
   } catch (e) {
     processError(e);
     throw e;
@@ -90,7 +91,11 @@ function resolveQualifiedURL(uri, pathVariables, filterParams) {
   // process path variables
   if (pathVariables) {
     for (let variable in pathVariables) {
-      newUri = newUri.replace(':' + variable, pathVariables[variable].toString());
+      if (pathVariables[variable]) {
+        newUri = newUri.replace(':' + variable, pathVariables[variable].toString());
+      } else {
+        newUri = newUri.replace(':' + variable, '');
+      }
     }
   }
 

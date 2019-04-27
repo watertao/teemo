@@ -1,6 +1,9 @@
 import { join } from 'path';
 import { existsSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync, mkdirSync } from 'fs';
 import _ from 'lodash';
+import chalk from 'chalk';
+
+
 export default function(api, options = { exclude: [] }) {
   const { paths } = api;
   const { exclude } = options;
@@ -31,8 +34,9 @@ export default function(api, options = { exclude: [] }) {
         const moduleConfigFileLocation = join(dir, 'module.config.js');
         if (existsSync(moduleConfigFileLocation)) {
           const moduleConfig = require(moduleConfigFileLocation);
-          moduleConfig.component = `./${_.join(parents, '/')}`;
           const moduleQualifiedCode = _.join(parents, '_');
+          preprocessModuleConfig(moduleQualifiedCode, moduleConfig);
+          moduleConfig.component = `./${_.join(parents, '/')}`;
           globalModuleSetting[moduleQualifiedCode] = moduleConfig;
         }
       });
@@ -44,6 +48,7 @@ export default function(api, options = { exclude: [] }) {
         }
       }
       const menuConfig = require(menuConfigFile);
+
       const menuRouteConfig = recursiveConvertMenu2Route(menuConfig, [], globalModuleSetting);
       // console.log(JSON.stringify(menuRouteConfig,null,2))
       route.routes = [
@@ -56,25 +61,46 @@ export default function(api, options = { exclude: [] }) {
       });
 
 
-      // generate locale definition in module.config.js
-      const moduleNameLocaleMap = {};
-      Object.keys(globalModuleSetting).forEach(moduleCode => {
-        const moduleConfig = globalModuleSetting[moduleCode];
-        Object.keys(moduleConfig.name).forEach(locale => {
-          if (!moduleNameLocaleMap[locale]) {
-            moduleNameLocaleMap[locale] = {};
+      // generate locale definition in module.locale.xx-XX.js
+      const moduleLocaleMap = {};
+      const MODULE_LOCALE_FILE_REG = /module\.locale\.([\w\-]+)\.js$/;
+      for (let moduleId in require.cache) {
+        if (MODULE_LOCALE_FILE_REG.test(moduleId)) {
+          delete require.cache[moduleId];
+        }
+      }
+      recursiveReadDir(pagesLocation, exclude, (dir, parents) => {
+        const moduleConfigFileLocation = join(dir, 'module.config.js');
+        if (!existsSync(moduleConfigFileLocation)) {
+          return;
+        }
+        const subItems = readdirSync(dir);
+        subItems.forEach(item => {
+          const path = join(dir, item);
+          if (statSync(path).isFile()) {
+            if (MODULE_LOCALE_FILE_REG.test(item)) {
+              const locale = RegExp.$1;
+              const moduleQualifiedCode = _.join(parents, '_');
+              const originModuleLocale = require(path);
+              const moduleLocale = {};
+              Object.keys(originModuleLocale).forEach(key => {
+                moduleLocale[`module.${moduleQualifiedCode}.${key}`] = originModuleLocale[key];
+              });
+              moduleLocaleMap[locale] = {
+                ...(moduleLocaleMap[locale] || {}),
+                ...moduleLocale,
+              };
+            }
           }
-          moduleNameLocaleMap[locale][`module.${moduleCode}`] = moduleConfig.name[locale];
-        });
+        })
       });
-      Object.keys(moduleNameLocaleMap).forEach(locale => {
-        const tmpLocaleFile = join(paths.absTmpDirPath, `moduleNameLocale_${locale}.js`);
+      Object.keys(moduleLocaleMap).forEach(locale => {
+        const tmpLocaleFile = join(paths.absTmpDirPath, `moduleLocale_${locale}.js`);
         if (existsSync(tmpLocaleFile)) {
           unlinkSync(tmpLocaleFile);
         }
-        writeFileSync(tmpLocaleFile, "export default " + JSON.stringify(moduleNameLocaleMap[locale]));
+        writeFileSync(tmpLocaleFile, "export default " + JSON.stringify(moduleLocaleMap[locale]));
       });
-
 
       // write globalModuleSetting to .umi directory for further use
       if (existsSync(globalModuleSettingFile)) {
@@ -145,7 +171,6 @@ function recursiveConvertModuleRoutes(moduleRoutes, parentPath, moduleLocation) 
   return result;
 }
 
-
 function recursiveReadDir(absDir, exclude, callback, parents) {
   if (!parents) {
     parents = [];
@@ -167,4 +192,70 @@ function recursiveReadDir(absDir, exclude, callback, parents) {
     });
 
   }
+}
+
+
+/**
+ * check configuration
+ *
+ * @param moduleConfig
+ */
+function preprocessModuleConfig(moduleQCode, moduleConfig) {
+
+  if (!moduleConfig.name) {
+    error(`name not specified in config [${moduleQCode}] `);
+    throw new Error();
+  }
+
+  if (moduleConfig.authority) {
+    const { authority } = moduleConfig;
+
+    if (!authority.resources) {
+      authority.resources = [];
+    } else {
+      authority.resources = _.uniq(authority.resources);
+    }
+
+    if (!authority.events) {
+      authority.events = [];
+    } else {
+      const tmpEventsMap = {};
+      authority.events.forEach(event => {
+        if (!event.code) {
+          error(`event code not specified in config [${moduleQCode}] `);
+          throw new Error();
+        }
+        if (!event.name) {
+          error(`event name not specified in config [${moduleQCode}] `);
+          throw new Error();
+        }
+        if (!event.resources) {
+          event.resources = [];
+        } else {
+          event.resources = _.uniq(event.resources);
+        }
+        if (tmpEventsMap[event.code]) {
+          error(`event code [${event.code}] duplicated in config [${moduleQCode}] `);
+          throw new Error();
+        } else {
+          tmpEventsMap[event.code] = true;
+        }
+      });
+    }
+
+  } else {
+    moduleConfig.authority = {
+      resources: [],
+      events: [],
+    };
+  }
+
+  if (!moduleConfig.routes) {
+    moduleConfig.routes  = [];
+  }
+
+}
+
+function error(message) {
+  console.log(chalk.red(message));
 }

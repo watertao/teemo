@@ -10,6 +10,7 @@ const { pwa, primaryColor } = defaultSettings;
 const { NODE_ENV, APP_TYPE, TEST } = process.env;
 
 const plugins = [
+  ['./plugins/module-gen-plugin'],
   ['./plugins/module-plugin', { exclude: ['.umi'] }],
   [
     'umi-plugin-react',
