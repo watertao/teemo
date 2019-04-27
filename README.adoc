@@ -235,10 +235,10 @@ umi module-gen
 |en-US, zh-CN 中选择
 
 |model 名
-|
+|比如 demoa
 
 |service 名
-|
+|比如 demoa
 
 |===
 
@@ -256,6 +256,48 @@ umi module-gen
 └── style.less
 
 ----
+
+
+== 菜单
+
+模块定义完成后，在菜单中该如何布局需要在 `src/menu.config.js` 中设置：
+
+=== menu.config.js
+
+.menu.config.js
+[source, javascript]
+----
+// restart server after change
+
+module.exports = [
+  {
+    code: 'test', type: 'group',  icon: 'profile',
+    children: [
+      { code: 'test-a', type: 'module' },
+      { code: 'test-b', type: 'module', },
+      { code: 'test-c', type: 'module', },
+
+
+    ]
+  },
+
+  {
+    code: 'authority', type: 'group', icon: 'safety',                 // <1>
+    children: [
+      { code: 'authority_resource-mgnt', type: 'module' },            // <2>
+      { code: 'authority_role-mgnt', type: 'module' },
+      { code: 'authority_user-mgnt', type: 'module' },
+    ]
+  },
+
+];
+----
+<1> type 为 group 的节点是菜单组，code 需唯一
+<2> type 为 module 的节点是模块，即可被点击进入的菜单，code 设置为 src/pages 下的目录结构以下划线组合
+
+
+== 权限
+
 
 
 === 受保护的页面
