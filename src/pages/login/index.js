@@ -35,7 +35,7 @@ export default class Login extends Component {
           <div className={styles["login-panel"]}>
 
             <div className={styles.banner}>
-              <div className={styles.title}>{`${fm({id: 'login.literal.loginTo'})}${fm({id: title})}`}</div>
+              <div className={styles.title}>{`${fm({id: title})}`}</div>
               <img className={styles.logo} src={logo}/>
             </div>
 

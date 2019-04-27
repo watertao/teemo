@@ -8,7 +8,7 @@ import component from './en-US/component';
 import MODULE_LOCALE from '@tmp/moduleLocale_en-US';
 
 export default {
-  'app.title': 'API Management',
+  'app.title': 'Teemo Console',
 
   'login.title': 'Login',
   'login.literal.loginTo': 'Login to ',

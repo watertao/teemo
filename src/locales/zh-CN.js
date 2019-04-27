@@ -8,7 +8,7 @@ import component from './zh-CN/component';
 import MODULE_LOCALE from '@tmp/moduleLocale_zh-CN';
 
 export default {
-  'app.title': 'API协议管理平台',
+  'app.title': 'Teemo 管理系统',
 
   'login.title': '登录',
   'login.literal.loginTo': '登录到',

@@ -44,8 +44,10 @@ export default class Index extends PureComponent {
         title: mm('label.loginName'),
         dataIndex: 'login_name',
         sorter: true,
-        render: (text, record, index) => {
-          return <a href="javascript:;" onClick={this._onDetailBtnClick.bind(this, record)}>{text}</a>;
+        render: (text, record) => {
+          return record.type == '1' ? (
+            <a href="javascript:;" onClick={this._onDetailBtnClick.bind(this, record)}>{text}</a>
+          ) : text;
         }
       },
       {

@@ -14,6 +14,11 @@ watertao <1059912278@qq.com>
 
 曾利（henry），吴涛（watertao）
 
+== 预览
+
+image::https://github.com/watertao/static-assets/blob/master/teemo/Xnip2019-04-27_18-33-12.jpg?raw=true[]
+image::https://github.com/watertao/static-assets/blob/master/teemo/Xnip2019-04-27_18-53-23.jpg?raw=true[]
+
 == 快速入门
 
 === clone 项目
