@@ -23,9 +23,79 @@ image::https://github.com/watertao/static-assets/blob/master/teemo/Xnip2019-04-2
 
 === clone 项目
 
-从 github 将 Teemo 项目 clone 到本地开发环境。
+将 Teemo 项目 clone 到本地开发环境：
 
 [source, bash]
 ----
 clone --depth=1 https://github.com/watertao/teemo.git myapp
 ----
+
+=== 安装依赖
+通过 yarn 或 npm 安装依赖：
+
+[source, bash]
+----
+cd myapp
+yarn install
+----
+
+
+=== 启动应用
+
+[source, bash]
+----
+npm start
+----
+
+[NOTE]
+====
+确保 `8000` 端口未被占用。
+====
+
+
+== 项目配置
+
+修改 `src/defaultSettings.js` 中的配置以满足自己的项目需求：
+
+.defaultSettings.js
+[source, javascript]
+----
+module.exports = {
+
+  navTheme: 'dark',                                         // <1>
+  primaryColor: '#1890FF',
+  layout: 'sidemenu',
+  contentWidth: 'Fluid',
+  fixedHeader: false,
+  autoHideHeader: false,
+  fixSiderbar: false,
+
+  menu: {
+    disableLocal: false,
+  },
+
+  pwa: true,
+
+  title: 'app.title',                                       // <2>
+  logoImg: 'MY-LOGO.svg',                                   // <3>
+
+  request: {
+    timeout: 5000,                                          // <4>
+    debounceDelay: 50,                                      // <5>
+  },
+
+  footer: {
+    copyright: 'Copyright123 © 2019 watertao.github.com',   // <6>
+  },
+
+};
+
+----
+<1> antd pro 自带的样式配置
+<2> 系统的名称 locale，将会显示在登录页及左侧菜单顶部，locale 定义在 `src/locales/` 下
+<3> 系统的 logo，注意该值修改后需要重新启动应用
+<4> fetch 请求默认超过该值会被认为超时
+<5> 默认的 debounce 延迟
+<6> copyright，显示在页面底部
+
+
