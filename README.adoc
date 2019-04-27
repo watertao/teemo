@@ -113,20 +113,20 @@ Teemo 将每个菜单视作一个模块，模块与模块之间相互独立。�
 ----
 module.exports = {
 
-  name: 'moduleName',
+  name: 'moduleName',                                               // <1>
 
   authority: {
-    resources: [
-      'GET /auth/roles',
+    resources: [                                                    // <2>
+      'GET /auth/roles',                                            // <3>
       'GET /auth/roles/{roleId}',
       'GET /auth/roles/{roleId}',
       'GET /auth/roles/{roleId}',
     ],
-    events: [
+    events: [                                                       // <4>
       {
-        code: 'create-role',
-        name: 'createRoleEventName',
-        resources: [
+        code: 'create-role',                                        // <5>
+        name: 'createRoleEventName',                                // <6>
+        resources: [                                                // <7>
           'POST /auth/roles',
         ],
       },
@@ -135,9 +135,7 @@ module.exports = {
         name: 'modifyRoleEventName',
         resources: [
           'PUT /auth/roles/{roleId}',
-          'GET /auth/roles',
           'GET /auth/roles/{roleId}',
-          'GET /auth/rols',
         ],
       },
       {
@@ -150,12 +148,10 @@ module.exports = {
     ],
   },
 
-  routes: [
+  routes: [                                                         // <8>
     {
-      // 转成实际路由时会在前面补上菜单对应的路径前缀
-      path: '/detail',
-      // 路由对应组件,是相对本文件所在目录的相对路径
-      component: 'components/Analysis',
+      path: '/detail',                                              // <9>
+      component: 'components/Analysis',                             // <10>
       routes: [
         {
           path: '/detail/more-detail',
@@ -167,6 +163,17 @@ module.exports = {
 
 }
 ----
+<1> 模块的名称 locale，对应模块目录下的国际化消息文件（如 module.locale.en-US.js）中的 key
+<2> 进入该模块所需的关联资源
+<3> 资源以 `动词` + `URI` 的形式表达
+<4> 定义该模块下的事件权限，比如按钮的权限
+<5> 事件的编码，在一个模块中唯一
+<6> 事件的名称 locale，对应模块目录下的国际化消息文件
+<7> 事件关联的资源
+<8> 模块内的路由配置
+<9> 转成实际路由时会在前面补上菜单对应的路径前缀
+<10> 路由对应的组件，相对目录模块的路径
+
 
 === 创建模块
 
