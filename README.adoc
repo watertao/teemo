@@ -175,6 +175,42 @@ module.exports = {
 <10> 路由对应的组件，相对目录模块的路径
 
 
+=== 模块国际化消息
+
+在模块目录下定义的名称看起来为 `module.locale.xx-XX.js` 的文件便是国际化消息文件，其中 `xx-XX` 便是语言缩写，常见的如 `en-US` 和
+`zh-CN` 等。 +
+
+.module.locale.en-US.js
+[source, javascript]
+----
+module.exports = {
+
+  'moduleName': 'Role Management',
+
+  'createRoleEventName': 'Create Role',
+  'modifyRoleEventName': 'Modify Role',
+  'deleteRoleEventName': 'Delete Role',
+
+};
+----
+
+在组件中，我们可以通过以下方式使用消息：
+
+[source, javascript]
+----
+import mm from '@/utils/message-util';
+
+export function(props) {
+  return mm('createRoleEventName');
+}
+----
+
+
+模块内的国际化消息只能用于同一模块下的组件，倘若想要跨模块使用国际化消息，那么可以使用 antd pro 原生的解决方案，即在 src/locales 中定义，
+并通过 formatMessage 函数去使用。
+
+
+
 === 创建模块
 
 Teemo 提供了一个命令行工具用于快速创建
