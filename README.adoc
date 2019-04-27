@@ -210,11 +210,52 @@ export function(props) {
 并通过 formatMessage 函数去使用。
 
 
+=== 入口组件
+
+每个模块目录下必须定义一个入口组件 index.js，在进入某一个模块时， Teemo 会自动加载此组件
+
 
 === 创建模块
 
-Teemo 提供了一个命令行工具用于快速创建
+Teemo 提供了一个命令行工具用于快速创建模块骨架：
 
+[source, bash]
+----
+umi module-gen
+----
+
+根据提示依次输入参数：
+
+[cols="1,2", options="header"]
+|===
+|模块路径
+|比如 /demo/demo-a, 这会生成 src/pages/demo/demo-a 这个模块
+
+|国际化定义
+|en-US, zh-CN 中选择
+
+|model 名
+|
+
+|service 名
+|
+
+|===
+
+执行完毕后会在 src/pages/demo/demo-a 下生成以下文件：
+
+----
+├── index.js
+├── models
+│   └── demoa.model.js
+├── module.config.js
+├── module.locale.en-US.js
+├── module.locale.zh-CN.js
+├── services
+│   └── demoa.service.js
+└── style.less
+
+----
 
 
 === 受保护的页面
