@@ -293,16 +293,24 @@ module.exports = [
 ];
 ----
 <1> type 为 group 的节点是菜单组，code 需唯一
-<2> type 为 module 的节点是模块，即可被点击进入的菜单，code 设置为 src/pages 下的目录结构以下划线组合
+<2> type 为 module 的节点是模块(即可被点击进入的菜单)，code 设置为 src/pages 下的目录结构以下划线组合,比如 src/pages/demo/demo-a ，
+则 code 为 demo_demo-a
 
 
 == 权限
 
+=== 受保护的资源
+
+对于前后端分离的应用而言，权限真正控制的点是 REST 接口。但 Teemo 仍然象征性的在前端做了权限控制，控制当前用户对哪些菜单可见，哪些按钮可按等。
+
+==== 菜单的权限控制
+
+菜单分为菜单组（type=group）和模块 (type=module)：
+
+image::https://github.com/watertao/static-assets/blob/master/teemo/menu.png?raw=true[menu,350,*]
 
 
-=== 受保护的页面
 
-Teemo 将页面分为受保护和不受保护两种，在应用启动后首次访问某个受保护页面时，Teemo 会从浏览器获取
 
 
 === 权限的控制
