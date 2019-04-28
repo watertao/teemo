@@ -309,7 +309,7 @@ module.exports = [
 
 image::https://github.com/watertao/static-assets/blob/master/teemo/menu.png?raw=true[menu,350,*]
 
-
+这种层级关系可以通过 <<menu.config.js, menu.config.js>> 配置。
 
 
 
