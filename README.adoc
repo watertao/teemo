@@ -228,6 +228,9 @@ umi module-gen
 
 [cols="1,2", options="header"]
 |===
+|参数
+|描述
+
 |模块路径
 |比如 /demo/demo-a, 这会生成 src/pages/demo/demo-a 这个模块
 
@@ -307,29 +310,52 @@ module.exports = [
 
 菜单分为菜单组（type=group）和模块 (type=module)：
 
-image::https://github.com/watertao/static-assets/blob/master/teemo/menu.png?raw=true[menu,350,*]
+image::https://github.com/watertao/static-assets/blob/master/teemo/menu.jpg?raw=true[menu,350,*]
 
-这种层级关系可以通过 <<_menu_config_js, menu.config.js>> 配置。
-
-
-
-=== 权限的控制
-
-
-对于前后端分离的应用而言，权限真正控制的点是 REST 接口。所以 Teemo 辨别当前用户是否具有访问某个菜单或者按钮的方式就是辨别他是否具有
-相应的接口访问权限。 +
-
-Teemo 为每个菜单或者按钮都定义了关联的 REST 接口集合，比如菜单【用户管理】被定义为关联了以下接口：
-
-* 获取用户集合（`GET /auth/users`）
-* 添加用户（`POST /auth/users`）
-* 修改用户（`PUT /auth/users/{userId}`）
-* 删除用户（`DELETE /auth/users/{userId}`）
-
-那么当用户同时具备了以上四个接口时，那么 Teemo 就认为他具有访问菜单【用户管理】的权限了。
+这种层级关系可以通过 <<menu_config_js, menu.config.js>> 配置。 +
+模块的显示权限由该模块的关联接口（参考 <<module_config_js, module.config.js>>）决定，当前登录用户具备了所有关联接口的访问权限便能在菜单
+中显示该模块。 +
+菜单组的显示权限取决于该菜单组下是否包含可见的模块，若没有任何模块可显示，那么菜单组也将被隐藏。
 
 
-=== 登录
+==== 事件的权限控制
 
-`Teemo` 默认自带了一个登录模块，位于 `src/pages/login`，该模提供了一个表单用于收集用户的标识（用户名）和凭证（密码），点击登录后向后台
-发起登录请求，创建会话。 +
+Teemo 为了让权限的粒度能够到按钮级别，所以定义了事件权限，参考 <<module_config_js, module.config.js>>。当前登录用户具备了某事件的所有
+关联接口的访问权限，那么它就具备访问该事件的权限了。
+
+
+=== 用户的权限
+
+定义了模块和事件的关联接口之后，我们还需要根据当前用户的权限才能知道他是否具备访问这些模块或事件的权限。 用户完成登录或会话同步后，Teemo 会
+在 src/models/global.model.js 中存储下用户的基本信息及权限信息，它的数据结构看起来如下：
+
+[source, json]
+----
+{
+  "token":"dd2043f9-2116-42bb-b59a-b74eb12b4f54",                 // <1>
+  "login_name":"demacia",                                         // <2>
+  "id":73,                                                        // <3>
+  "name":"超级用户",                                               // <4>
+  "resources":[                                                   // <5>
+    {
+      "verb":"GET",                                               // <6>
+      "name":"获取资源集合",                                        // <7>
+      "uri_pattern":"/auth/resources",                            // <8>
+      "id":1                                                      // <9>
+    }
+  ]
+}
+----
+<1> 会话令牌
+<2> 登录名
+<3> 用户的标识
+<4> 用户名称
+<5> 用户能否访问的 REST 接口集合
+<6> 接口的动词
+<7> 接口名称
+<8> 接口的 URI 模式
+<9> 接口的标识
+
+以上结构是必须的，倘若后端所返回的数据结构与上面不符，那么需要转换成上面这种结构。如果使用 link:https://github.com/watertao/hygen-veigar-simple-auth[hygen-veigar-simple-auth]
+ 生成的登录及会话同步接口，那么返回的数据结构默认就是这样的。
+

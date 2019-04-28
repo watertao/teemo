@@ -534,9 +534,36 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel1">
 <li><a href="#_贡献者">1. 贡献者</a></li>
 <li><a href="#_预览">2. 预览</a></li>
-<li><a href="#_快速入门">3. 快速入门</a>
+<li><a href="#_快速开始">3. 快速开始</a>
 <ul class="sectlevel2">
 <li><a href="#_clone_项目">3.1. clone 项目</a></li>
+<li><a href="#_安装依赖">3.2. 安装依赖</a></li>
+<li><a href="#_启动应用">3.3. 启动应用</a></li>
+</ul>
+</li>
+<li><a href="#_项目配置">4. 项目配置</a></li>
+<li><a href="#_模块">5. 模块</a>
+<ul class="sectlevel2">
+<li><a href="#_module_config_js">5.1. module.config.js</a></li>
+<li><a href="#_模块国际化消息">5.2. 模块国际化消息</a></li>
+<li><a href="#_入口组件">5.3. 入口组件</a></li>
+<li><a href="#_创建模块">5.4. 创建模块</a></li>
+</ul>
+</li>
+<li><a href="#_菜单">6. 菜单</a>
+<ul class="sectlevel2">
+<li><a href="#_menu_config_js">6.1. menu.config.js</a></li>
+</ul>
+</li>
+<li><a href="#_权限">7. 权限</a>
+<ul class="sectlevel2">
+<li><a href="#_受保护的资源">7.1. 受保护的资源</a>
+<ul class="sectlevel3">
+<li><a href="#_菜单的权限控制">7.1.1. 菜单的权限控制</a></li>
+<li><a href="#_事件的权限控制">7.1.2. 事件的权限控制</a></li>
+</ul>
+</li>
+<li><a href="#_用户的权限">7.2. 用户的权限</a></li>
 </ul>
 </li>
 </ul>
@@ -574,12 +601,12 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_快速入门">3. 快速入门</h2>
+<h2 id="_快速开始">3. 快速开始</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_clone_项目">3.1. clone 项目</h3>
 <div class="paragraph">
-<p>从 github 将 Teemo 项目 clone 到本地开发环境。</p>
+<p>将 Teemo 项目 clone 到本地开发环境：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -587,12 +614,491 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_安装依赖">3.2. 安装依赖</h3>
+<div class="paragraph">
+<p>通过 yarn 或 npm 安装依赖：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd myapp
+yarn install</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_启动应用">3.3. 启动应用</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">npm start</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>确保 <code>8000</code> 端口未被占用。</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_项目配置">4. 项目配置</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>修改 <code>src/defaultSettings.js</code> 中的配置以满足自己的项目需求：</p>
+</div>
+<div class="listingblock">
+<div class="title">defaultSettings.js</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">module.exports = {
+
+  <span class="key">navTheme</span>: <span class="string"><span class="delimiter">'</span><span class="content">dark</span><span class="delimiter">'</span></span>,                                         <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="key">primaryColor</span>: <span class="string"><span class="delimiter">'</span><span class="content">#1890FF</span><span class="delimiter">'</span></span>,
+  <span class="key">layout</span>: <span class="string"><span class="delimiter">'</span><span class="content">sidemenu</span><span class="delimiter">'</span></span>,
+  <span class="key">contentWidth</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fluid</span><span class="delimiter">'</span></span>,
+  <span class="key">fixedHeader</span>: <span class="predefined-constant">false</span>,
+  <span class="key">autoHideHeader</span>: <span class="predefined-constant">false</span>,
+  <span class="key">fixSiderbar</span>: <span class="predefined-constant">false</span>,
+
+  <span class="key">menu</span>: {
+    <span class="key">disableLocal</span>: <span class="predefined-constant">false</span>,
+  },
+
+  <span class="key">pwa</span>: <span class="predefined-constant">true</span>,
+
+  <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">app.title</span><span class="delimiter">'</span></span>,                                       <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="key">logoImg</span>: <span class="string"><span class="delimiter">'</span><span class="content">MY-LOGO.svg</span><span class="delimiter">'</span></span>,                                   <i class="conum" data-value="3"></i><b>(3)</b>
+
+  <span class="key">request</span>: {
+    <span class="key">timeout</span>: <span class="integer">5000</span>,                                          <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="key">debounceDelay</span>: <span class="integer">50</span>,                                      <i class="conum" data-value="5"></i><b>(5)</b>
+  },
+
+  <span class="key">footer</span>: {
+    <span class="key">copyright</span>: <span class="string"><span class="delimiter">'</span><span class="content">Copyright123 © 2019 watertao.github.com</span><span class="delimiter">'</span></span>,   <i class="conum" data-value="6"></i><b>(6)</b>
+  },
+
+};</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>antd pro 自带的样式配置</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>系统的名称 locale，将会显示在登录页及左侧菜单顶部，locale 定义在 <code>src/locales/</code> 下</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>系统的 logo，注意该值修改后需要重新启动应用</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>fetch 请求默认超过该值会被认为超时</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>默认的 debounce 延迟</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>copyright，显示在页面底部</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_模块">5. 模块</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Teemo 将每个菜单视作一个模块，模块与模块之间相互独立。模块位于 <code>src/pages</code> 下， Teemo 将递归查找该目录下的所有子目录，但凡某个目录下包含
+<code>module.config.js</code>,那么该目录被视作一个模块。</p>
+</div>
+<div class="sect2">
+<h3 id="_module_config_js">5.1. module.config.js</h3>
+<div class="paragraph">
+<p>模块的配置文件：</p>
+</div>
+<div class="listingblock">
+<div class="title">module.config.js</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">module.exports = {
+
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">moduleName</span><span class="delimiter">'</span></span>,                                               <i class="conum" data-value="1"></i><b>(1)</b>
+
+  <span class="key">authority</span>: {
+    <span class="key">resources</span>: [                                                    <i class="conum" data-value="2"></i><b>(2)</b>
+      <span class="string"><span class="delimiter">'</span><span class="content">GET /auth/roles</span><span class="delimiter">'</span></span>,                                            <i class="conum" data-value="3"></i><b>(3)</b>
+      <span class="string"><span class="delimiter">'</span><span class="content">GET /auth/roles/{roleId}</span><span class="delimiter">'</span></span>,
+      <span class="string"><span class="delimiter">'</span><span class="content">GET /auth/roles/{roleId}</span><span class="delimiter">'</span></span>,
+      <span class="string"><span class="delimiter">'</span><span class="content">GET /auth/roles/{roleId}</span><span class="delimiter">'</span></span>,
+    ],
+    <span class="key">events</span>: [                                                       <i class="conum" data-value="4"></i><b>(4)</b>
+      {
+        <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">create-role</span><span class="delimiter">'</span></span>,                                        <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">createRoleEventName</span><span class="delimiter">'</span></span>,                                <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="key">resources</span>: [                                                <i class="conum" data-value="7"></i><b>(7)</b>
+          <span class="string"><span class="delimiter">'</span><span class="content">POST /auth/roles</span><span class="delimiter">'</span></span>,
+        ],
+      },
+      {
+        <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">modify-role</span><span class="delimiter">'</span></span>,
+        <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">modifyRoleEventName</span><span class="delimiter">'</span></span>,
+        <span class="key">resources</span>: [
+          <span class="string"><span class="delimiter">'</span><span class="content">PUT /auth/roles/{roleId}</span><span class="delimiter">'</span></span>,
+          <span class="string"><span class="delimiter">'</span><span class="content">GET /auth/roles/{roleId}</span><span class="delimiter">'</span></span>,
+        ],
+      },
+      {
+        <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">delete-role</span><span class="delimiter">'</span></span>,
+        <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">deleteRoleEventName</span><span class="delimiter">'</span></span>,
+        <span class="key">resources</span>: [
+          <span class="string"><span class="delimiter">'</span><span class="content">DELETE /auth/roles/{roleId}</span><span class="delimiter">'</span></span>,
+        ],
+      },
+    ],
+  },
+
+  <span class="key">routes</span>: [                                                         <i class="conum" data-value="8"></i><b>(8)</b>
+    {
+      <span class="key">path</span>: <span class="string"><span class="delimiter">'</span><span class="content">/detail</span><span class="delimiter">'</span></span>,                                              <i class="conum" data-value="9"></i><b>(9)</b>
+      <span class="key">component</span>: <span class="string"><span class="delimiter">'</span><span class="content">components/Analysis</span><span class="delimiter">'</span></span>,                             <i class="conum" data-value="10"></i><b>(10)</b>
+      <span class="key">routes</span>: [
+        {
+          <span class="key">path</span>: <span class="string"><span class="delimiter">'</span><span class="content">/detail/more-detail</span><span class="delimiter">'</span></span>,
+          <span class="key">component</span>: <span class="string"><span class="delimiter">'</span><span class="content">components/MoreDetail</span><span class="delimiter">'</span></span>,
+        }
+      ]
+    }
+]
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>模块的名称 locale，对应模块目录下的国际化消息文件（如 module.locale.en-US.js）中的 key</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>进入该模块所需的关联资源</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>资源以 <code>动词</code> + <code>URI</code> 的形式表达</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>定义该模块下的事件权限，比如按钮的权限</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>事件的编码，在一个模块中唯一</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>事件的名称 locale，对应模块目录下的国际化消息文件</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>事件关联的资源</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>模块内的路由配置</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>转成实际路由时会在前面补上菜单对应的路径前缀</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>路由对应的组件，相对目录模块的路径</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_模块国际化消息">5.2. 模块国际化消息</h3>
+<div class="paragraph">
+<p>在模块目录下定义的名称看起来为 <code>module.locale.xx-XX.js</code> 的文件便是国际化消息文件，其中 <code>xx-XX</code> 便是语言缩写，常见的如 <code>en-US</code> 和
+<code>zh-CN</code> 等。<br></p>
+</div>
+<div class="listingblock">
+<div class="title">module.locale.en-US.js</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">module.exports = {
+
+  <span class="key"><span class="delimiter">'</span><span class="content">moduleName</span><span class="delimiter">'</span></span>: <span class="string"><span class="delimiter">'</span><span class="content">Role Management</span><span class="delimiter">'</span></span>,
+
+  <span class="key"><span class="delimiter">'</span><span class="content">createRoleEventName</span><span class="delimiter">'</span></span>: <span class="string"><span class="delimiter">'</span><span class="content">Create Role</span><span class="delimiter">'</span></span>,
+  <span class="key"><span class="delimiter">'</span><span class="content">modifyRoleEventName</span><span class="delimiter">'</span></span>: <span class="string"><span class="delimiter">'</span><span class="content">Modify Role</span><span class="delimiter">'</span></span>,
+  <span class="key"><span class="delimiter">'</span><span class="content">deleteRoleEventName</span><span class="delimiter">'</span></span>: <span class="string"><span class="delimiter">'</span><span class="content">Delete Role</span><span class="delimiter">'</span></span>,
+
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在组件中，我们可以通过以下方式使用消息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="reserved">import</span> mm from <span class="string"><span class="delimiter">'</span><span class="content">@/utils/message-util</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">function</span>(props) {
+  <span class="keyword">return</span> mm(<span class="string"><span class="delimiter">'</span><span class="content">createRoleEventName</span><span class="delimiter">'</span></span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>模块内的国际化消息只能用于同一模块下的组件，倘若想要跨模块使用国际化消息，那么可以使用 antd pro 原生的解决方案，即在 src/locales 中定义，
+并通过 formatMessage 函数去使用。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_入口组件">5.3. 入口组件</h3>
+<div class="paragraph">
+<p>每个模块目录下必须定义一个入口组件 index.js，在进入某一个模块时， Teemo 会自动加载此组件</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_创建模块">5.4. 创建模块</h3>
+<div class="paragraph">
+<p>Teemo 提供了一个命令行工具用于快速创建模块骨架：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">umi module-gen</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>根据提示依次输入参数：</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">参数</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">模块路径</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">比如 /demo/demo-a, 这会生成 src/pages/demo/demo-a 这个模块</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">国际化定义</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en-US, zh-CN 中选择</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">model 名</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">比如 demoa</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">service 名</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">比如 demoa</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>执行完毕后会在 src/pages/demo/demo-a 下生成以下文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>├── index.js
+├── models
+│   └── demoa.model.js
+├── module.config.js
+├── module.locale.en-US.js
+├── module.locale.zh-CN.js
+├── services
+│   └── demoa.service.js
+└── style.less</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_菜单">6. 菜单</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块定义完成后，在菜单中该如何布局需要在 <code>src/menu.config.js</code> 中设置：</p>
+</div>
+<div class="sect2">
+<h3 id="_menu_config_js">6.1. menu.config.js</h3>
+<div class="listingblock">
+<div class="title">menu.config.js</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="comment">// restart server after change</span>
+
+module.exports = [
+  {
+    <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">group</span><span class="delimiter">'</span></span>,  <span class="key">icon</span>: <span class="string"><span class="delimiter">'</span><span class="content">profile</span><span class="delimiter">'</span></span>,
+    <span class="key">children</span>: [
+      { <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">test-a</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">module</span><span class="delimiter">'</span></span> },
+      { <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">test-b</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">module</span><span class="delimiter">'</span></span>, },
+      { <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">test-c</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">module</span><span class="delimiter">'</span></span>, },
+
+
+    ]
+  },
+
+  {
+    <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">authority</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">group</span><span class="delimiter">'</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">'</span><span class="content">safety</span><span class="delimiter">'</span></span>,                 <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="key">children</span>: [
+      { <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">authority_resource-mgnt</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">module</span><span class="delimiter">'</span></span> },            <i class="conum" data-value="2"></i><b>(2)</b>
+      { <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">authority_role-mgnt</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">module</span><span class="delimiter">'</span></span> },
+      { <span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">authority_user-mgnt</span><span class="delimiter">'</span></span>, <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">module</span><span class="delimiter">'</span></span> },
+    ]
+  },
+
+];</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>type 为 group 的节点是菜单组，code 需唯一</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>type 为 module 的节点是模块(即可被点击进入的菜单)，code 设置为 src/pages 下的目录结构以下划线组合,比如 src/pages/demo/demo-a ，
+则 code 为 demo_demo-a</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_权限">7. 权限</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_受保护的资源">7.1. 受保护的资源</h3>
+<div class="paragraph">
+<p>对于前后端分离的应用而言，权限真正控制的点是 REST 接口。但 Teemo 仍然象征性的在前端做了权限控制，控制当前用户对哪些菜单可见，哪些按钮可按等。</p>
+</div>
+<div class="sect3">
+<h4 id="_菜单的权限控制">7.1.1. 菜单的权限控制</h4>
+<div class="paragraph">
+<p>菜单分为菜单组（type=group）和模块 (type=module)：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://github.com/watertao/static-assets/blob/master/teemo/menu.jpg?raw=true" alt="menu" width="350" height="*">
+</div>
+</div>
+<div class="paragraph">
+<p>这种层级关系可以通过 <a href="#menu_config_js">menu.config.js</a> 配置。<br>
+模块的显示权限由该模块的关联接口（参考 <a href="#module_config_js">module.config.js</a>）决定，当前登录用户具备了所有关联接口的访问权限便能在菜单
+中显示该模块。<br>
+菜单组的显示权限取决于该菜单组下是否包含可见的模块，若没有任何模块可显示，那么菜单组也将被隐藏。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_事件的权限控制">7.1.2. 事件的权限控制</h4>
+<div class="paragraph">
+<p>Teemo 为了让权限的粒度能够到按钮级别，所以定义了事件权限，参考 <a href="#module_config_js">module.config.js</a>。当前登录用户具备了某事件的所有
+关联接口的访问权限，那么它就具备访问该事件的权限了。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_用户的权限">7.2. 用户的权限</h3>
+<div class="paragraph">
+<p>定义了模块和事件的关联接口之后，我们还需要根据当前用户的权限才能知道他是否具备访问这些模块或事件的权限。 用户完成登录或会话同步后，Teemo 会
+在 src/models/global.model.js 中存储下用户的基本信息及权限信息，它的数据结构看起来如下：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">token</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">dd2043f9-2116-42bb-b59a-b74eb12b4f54</span><span class="delimiter">&quot;</span></span>,                 <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">login_name</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">demacia</span><span class="delimiter">&quot;</span></span>,                                         <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>:<span class="integer">73</span>,                                                        <i class="conum" data-value="3"></i><b>(3)</b>
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">超级用户</span><span class="delimiter">&quot;</span></span>,                                               <i class="conum" data-value="4"></i><b>(4)</b>
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">resources</span><span class="delimiter">&quot;</span></span>:[                                                   <i class="conum" data-value="5"></i><b>(5)</b>
+    {
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">verb</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>,                                               <i class="conum" data-value="6"></i><b>(6)</b>
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">获取资源集合</span><span class="delimiter">&quot;</span></span>,                                        <i class="conum" data-value="7"></i><b>(7)</b>
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">uri_pattern</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">/auth/resources</span><span class="delimiter">&quot;</span></span>,                            <i class="conum" data-value="8"></i><b>(8)</b>
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>:<span class="integer">1</span>                                                      <i class="conum" data-value="9"></i><b>(9)</b>
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>会话令牌</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>登录名</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>用户的标识</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>用户名称</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>用户能否访问的 REST 接口集合</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>接口的动词</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>接口名称</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>接口的 URI 模式</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>接口的标识</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>以上结构是必须的，倘若后端所返回的数据结构与上面不符，那么需要转换成上面这种结构。如果使用 <a href="https://github.com/watertao/hygen-veigar-simple-auth">hygen-veigar-simple-auth</a>
+ 生成的登录及会话同步接口，那么返回的数据结构默认就是这样的。</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-27 18:58:29 +0800
+Last updated 2019-04-28 14:27:14 +0800
 </div>
 </div>
 </body>

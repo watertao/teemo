@@ -24,14 +24,6 @@ module.exports = {
   },
 
   footer: {
-    links: [
-      // {
-      //   key: 'github',
-      //   title: <Icon type="github" />,
-      //   href: 'https://github.com/ant-design/ant-design-pro',
-      //   blankTarget: true,
-      // },
-    ],
     copyright: 'Copyright123 © 2019 watertao.github.com',
   },
 
