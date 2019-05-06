@@ -64,7 +64,7 @@ export default class TMDataList extends Component {
     if (type == 'first') {
       this._firstPage(this._fireDataFetchExpectEvent);
     } else if (type == 'reset') {
-      this._reset(this._fireDataFetchExpectEvent);
+      this._reset();
     } else {
       this._fireDataFetchExpectEvent();
     }
@@ -126,8 +126,7 @@ export default class TMDataList extends Component {
     this.query('first');
   }
 
-  _reset = (callback) => {
-    this.qcComponent && this.qcComponent.resetForm();
+  _reset = () => {
     this.setState({
       tableProp: {
         ...this.state.tableProp,
@@ -137,7 +136,9 @@ export default class TMDataList extends Component {
         ...this.state.pagination,
         current: 1,
       },
-    }, callback)
+    }, () => {
+      this.qcComponent && this.qcComponent.reset();
+    })
   }
 
   _firstPage = (callback) => {

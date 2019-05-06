@@ -42,7 +42,12 @@ export default abstract class AbstractQueryCondition extends PureComponent<IQuer
     this.setState({...valueObj}, this.fireQueryConditionChangeEvent);
   }
 
-  abstract resetForm(): Object;
+  public reset = () => {
+    this.resetForm(this.fireQueryConditionChangeEvent);
+
+  }
+
+  protected abstract resetForm(callback): Object;
 
   abstract getFormValues(): Object;
 
