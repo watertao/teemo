@@ -9,7 +9,7 @@ import styles from './style.less';
 
 
 @connect(({ resource, loading }) => ({ resource, loading }))
-export default class OtherFailType extends Component {
+export default class ResourceManagement extends Component {
 
   constructor(props) {
     super(props);

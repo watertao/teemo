@@ -164,7 +164,7 @@ export default class Index extends Component {
       payload: { roleId: record.id },
     }).then(() => {
       message.success(mm('tip.feedback.deleteRoleSuccess'));
-      this.tmDataListRef.current.query();
+      this.tmDataListRef.current.query('first');
     });
   }
 

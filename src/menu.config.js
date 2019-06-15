@@ -27,6 +27,8 @@ module.exports = [
       { code: 'authority_role-mgnt', type: 'module' },
       // user management
       { code: 'authority_user-mgnt', type: 'module' },
+      // audit log
+      { code: 'authority_auditlog', type: 'module' },
     ]
   },
 

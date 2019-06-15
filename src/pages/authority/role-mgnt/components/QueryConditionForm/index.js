@@ -28,8 +28,8 @@ export default class QueryConditionForm extends AbstractQueryCondition {
     }
   }
 
-  resetForm() {
-    this.setState({ ...QueryConditionForm.initQueryCondition });
+  resetForm(callback) {
+    this.setState({ ...QueryConditionForm.initQueryCondition }, callback);
   }
 
   getFormValues() {

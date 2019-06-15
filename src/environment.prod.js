@@ -1,5 +1,5 @@
 export default {
 
-    endpoint: 'http://172.190.14.156:8080'
+    endpoint: 'http://www.watertao.top:8080'
 
 };

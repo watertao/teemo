@@ -122,6 +122,28 @@
 }
 
 /* 
+  Convert to from  src/components/form-item/TMCombobox/style.less
+ */
+.antd-pro-components-form-item-t-m-combobox-style-keyword-highlight {
+  color: @primary-color;
+}
+
+/* 
+  Convert to from  src/components/form-item/TMCombobox2/style.less
+ */
+
+.antd-pro-components-form-item-t-m-combobox2-style-keyword-highlight {
+  color: @primary-color;
+}
+
+.antd-pro-components-form-item-t-m-combobox2-style-pagination {
+  text-align: right;
+  height: 40px;
+  padding-top: 8px;
+  border-top: 1px solid #f5f5f5;
+}
+
+/* 
   Convert to from  src/components/GlobalFooter/index.less
  */
 
@@ -957,6 +979,73 @@
 }
 
 /* 
+  Convert to from  src/components/StandardFormRow/index.less
+ */
+
+.antd-pro-components-standard-form-row-index-standardFormRow {
+  display: flex;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed @border-color-split;
+  .ant-form-item {
+    margin-right: 24px;
+  }
+  .ant-form-item-label label {
+    margin-right: 0;
+    color: @text-color;
+  }
+  .ant-form-item-label,
+  .ant-form-item-control {
+    padding: 0;
+    line-height: 32px;
+  }
+  .antd-pro-components-standard-form-row-index-label {
+    flex: 0 0 auto;
+    margin-right: 24px;
+    color: @heading-color;
+    font-size: @font-size-base;
+    text-align: right;
+    & > span {
+      display: inline-block;
+      height: 32px;
+      line-height: 32px;
+      &::after {
+        content: "：";
+      }
+    }
+  }
+  .antd-pro-components-standard-form-row-index-content {
+    flex: 1 1 0;
+    .ant-form-item:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.antd-pro-components-standard-form-row-index-standardFormRowLast {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border: none;
+}
+
+.antd-pro-components-standard-form-row-index-standardFormRowBlock {
+  .ant-form-item,
+  div.ant-form-item-control-wrapper {
+    display: block;
+  }
+}
+
+.antd-pro-components-standard-form-row-index-standardFormRowGrid {
+  .ant-form-item,
+  div.ant-form-item-control-wrapper {
+    display: block;
+  }
+  .ant-form-item-label {
+    float: left;
+  }
+}
+
+/* 
   Convert to from  src/components/TagSelect/index.less
  */
 .antd-pro-components-tag-select-index-tagSelect {
@@ -1078,8 +1167,8 @@
     margin-right: 24px;
   }
   .ant-form-item-label label {
-    margin-right: 0;
-    color: @text-color;
+    margin-right: 8px;
+    color: rgba(0, 0, 0, 0.85);
   }
   .ant-form-item-label,
   .ant-form-item-control {
@@ -1226,6 +1315,55 @@
 }
 
 /* 
+  Convert to from  src/pages/authority/auditlog/components/QueryConditionForm/style.less
+ */
+.antd-pro-pages-authority-auditlog-components-query-condition-form-style-login_name {
+  color: rgba(0, 0, 0, 0.35);
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+/* 
+  Convert to from  src/pages/authority/auditlog/style.less
+ */
+
+.antd-pro-pages-authority-auditlog-style-content {
+  padding: 24px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.antd-pro-pages-authority-auditlog-style-button-area {
+  margin-bottom: 16px;
+  height: 32px;
+}
+
+.antd-pro-pages-authority-auditlog-style-right {
+  text-align: right;
+}
+
+.antd-pro-pages-authority-auditlog-style-uri_pattern {
+  font-style: italic;
+}
+
+.antd-pro-pages-authority-auditlog-style-operator {
+  position: relative;
+  top: 0px;
+
+  .antd-pro-pages-authority-auditlog-style-name {
+    position: absolute;
+    top: -16px;
+  }
+
+  .antd-pro-pages-authority-auditlog-style-extra {
+    position: absolute;
+    bottom: -20px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* 
   Convert to from  src/pages/authority/resource-mgnt/style.less
  */
 
@@ -1352,10 +1490,6 @@
   vertical-align: middle;
   color: rgba(0, 0, 0, 0.45);
 }
-
-/* 
-  Convert to from  src/pages/demo/demo-a/style.less
- */
 
 /* 
   Convert to from  src/utils/utils.less

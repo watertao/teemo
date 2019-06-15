@@ -200,7 +200,7 @@ export default class Index extends PureComponent {
     }).then((result) => {
       if (result) {
         message.success(mm('tip.feedback.deleteUserSuccess'));
-        this.tmDataListRef.current.query('reset');
+        this.tmDataListRef.current.query('first');
       }
     });
   }
