@@ -1,5 +1,5 @@
 export default {
 
-    endpoint: 'http://106.15.239.145:8080'
+    endpoint: 'http://www.watertao.top/api'
 
 };
